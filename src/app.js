@@ -12,7 +12,7 @@ function clearWatchLater() {
   popup.style.display = 'none';
 
   videos.forEach(async (el, i) => {
-    await new Promise(resolve => setTimeout(() => resolve(el.querySelector('yt-icon-button').click()), 300 * i));
+    await new Promise(resolve => setTimeout(() => resolve(el.querySelector('yt-icon-button').click()), 300 * ++i));
     popup.querySelector('tp-yt-paper-listbox [has-separator]').nextSibling.click();
     if (i === last) popup.style.display = '';
   });
