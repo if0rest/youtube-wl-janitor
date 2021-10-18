@@ -1,10 +1,8 @@
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if (request.action === "clicked_wlj") {
-      clearWatchLater();
-    }
-  }
-);
+'use strict';
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "clicked_wlj") clearWatchLater();
+});
 
 function clearWatchLater() {
   let videos = document.querySelector('#contents.ytd-playlist-video-list-renderer').childNodes,
@@ -14,14 +12,9 @@ function clearWatchLater() {
   popup.style.display = 'none';
 
   videos.forEach((el, i) => {
-    let promise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        el.querySelector('yt-icon-button').click();
-        resolve('done');
-      }, 300 * i);
-    });
-
-    promise.finally(() => {
+    (new Promise((resolve, reject) => {
+      setTimeout(() => resolve(el.querySelector('yt-icon-button').click()), 300 * i);
+    })).finally(() => {
       popup.querySelector('tp-yt-paper-listbox [has-separator]').nextSibling.click();
       if (i === last) popup.style.display = '';
     });
